@@ -800,6 +800,15 @@ void R_Flash( void )
 	R_PolyBlend ();
 }
 
+void ApplyFog()
+{
+	qglFogf(GL_FOG_MODE, GL_EXP);
+	qglFogf(GL_FOG_DENSITY, 0.0005f);
+	GLfloat FogColor[] = {0.5f, 0.5f, 0.5f, 1.0f};
+	qglFogfv(GL_FOG_COLOR, FogColor);
+	qglEnable(GL_FOG);
+}
+
 /*
 ================
 R_RenderView
@@ -833,6 +842,8 @@ void R_RenderView (refdef_t *fd)
 	R_SetFrustum ();
 
 	R_SetupGL ();
+
+	ApplyFog();
 
 	R_MarkLeaves ();	// done here so we know if we're in water
 
